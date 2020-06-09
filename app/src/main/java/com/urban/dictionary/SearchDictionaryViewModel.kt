@@ -8,6 +8,7 @@ import com.urban.dictionary.model.DictionaryResponse
 import com.urban.dictionary.model.SearchItem
 import com.urban.dictionary.repository.DictionaryRepository
 import com.urban.dictionary.service.ServiceResult
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchDictionaryViewModel : ViewModel() {
@@ -22,6 +23,7 @@ class SearchDictionaryViewModel : ViewModel() {
 
     fun startSearchByTerm(search: String) {
         viewModelScope.launch {
+            delay(1000)
             when (
                 val result =
                     dictionaryRepository.fetchSearchData(search)
