@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">UrbanDictionary</string>
     <string name="search">Search</string>
+    <string name="thumbs_up">ThumbsUp</string>
+    <string name="thumbs_down">ThumbsDown</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

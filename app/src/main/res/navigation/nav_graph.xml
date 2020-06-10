@@ -8,4 +8,8 @@
         android:id="@+id/urban_search_dictionary_fragment"
         android:name="com.urban.dictionary.SearchDictionaryFragment" />
 
+    <fragment
+        android:id="@+id/urban_search_details_fragment"
+        android:name="com.urban.dictionary.SearchItemDetailsFragment" />
+
 </navigation>
