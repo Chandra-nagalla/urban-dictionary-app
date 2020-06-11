@@ -16,6 +16,8 @@ class SearchDictionaryViewModel : ViewModel() {
     private lateinit var dictionaryRepository: DictionaryRepository
     private var _readListData = MutableLiveData<List<SearchItem>>()
     val fetchList: LiveData<List<SearchItem>> = _readListData
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun init(newsRepository: DictionaryRepository) {
         this.dictionaryRepository = newsRepository
@@ -24,14 +26,16 @@ class SearchDictionaryViewModel : ViewModel() {
     fun startSearchByTerm(search: String) {
         viewModelScope.launch {
             delay(1000)
+            _isLoading.value = true
             when (
                 val result =
                     dictionaryRepository.fetchSearchData(search)
                 ) {
                 is ServiceResult.Error -> {
-
+                    _isLoading.value = false
                 }
                 is ServiceResult.Success -> {
+                    _isLoading.value = false
                     val response = result.data as DictionaryResponse
                     _readListData.value = response.list
                 }

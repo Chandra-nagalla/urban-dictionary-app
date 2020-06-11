@@ -76,5 +76,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/item_thumbsDown_image"
             app:layout_constraintEnd_toStartOf="@id/item_thumbsDown_image"
             app:layout_constraintTop_toTopOf="@id/item_thumbsDown_image" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

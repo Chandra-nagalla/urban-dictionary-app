@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +24,7 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SearchAdapter
     private lateinit var searchItemList: List<SearchItem>
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +45,27 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
         searchText = view.findViewById(R.id.urban_search_editText)
         searchText.addTextChangedListener(this)
         recyclerView = view.findViewById(R.id.urban_search_recycler)
+        progressBar = view.findViewById(R.id.urban_progressbar)
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = SearchAdapter(::searchItemClick)
         viewModel.fetchList.observe(viewLifecycleOwner, Observer {
             searchItemList = it
-            sortSearchData(DEFAULT)
+            sortSearchData(THUMBS_UP)
             recyclerView.adapter = adapter
+        })
+
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }
+
+                false -> {
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+            }
         })
     }
 
@@ -92,9 +109,6 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
             THUMBS_UP -> {
                 data = searchItemList.sortedByDescending { it.thumbs_up }
             }
-            DEFAULT -> {
-                data = searchItemList
-            }
         }
 
         adapter.setData(data)
@@ -109,9 +123,8 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
 
 
     companion object {
-        const val DEFAULT = 0
-        const val THUMBS_UP = 1
-        const val THUMBS_DOWN = 2
+        const val THUMBS_UP = 0
+        const val THUMBS_DOWN = 1
     }
 
 }
