@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.urban.dictionary.model.SearchItem
+import com.urban.dictionary.utils.SEARCH_ITEM_DETAILS
 
 
 class SearchItemDetailsFragment : Fragment() {
@@ -16,7 +17,7 @@ class SearchItemDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            it.getParcelable<SearchItem>("Item")?.apply {
+            it.getParcelable<SearchItem>(SEARCH_ITEM_DETAILS)?.apply {
                 searchItemDetails = this
             }
         }

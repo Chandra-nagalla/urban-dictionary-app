@@ -8,6 +8,7 @@ import com.urban.dictionary.service.ServiceResult
 import com.urban.dictionary.service.UrbanDictionaryService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 class DictionaryRepositoryImpl(
@@ -19,22 +20,23 @@ class DictionaryRepositoryImpl(
 
     override suspend fun fetchSearchData(search: String): ServiceResult<BusinessObject> {
         val result = withContext(ioDispatcher) {
+            delay(1000)
             RetrofitCallHandler.processCall {
                 newsService.getSearchByTerm(search)
             }
         }
 
         return when (result) {
-            is ServiceResult.Success -> result
+            is ServiceResult.Success -> transformResponseToCheckInTravelPlanObject(result.data)
             is ServiceResult.Error -> result
         }
     }
 
-    internal fun transformResponseToCheckInTravelPlanObject(response: DictionaryResponse): ServiceResult<BusinessObject> {
+    private fun transformResponseToCheckInTravelPlanObject(response: DictionaryResponse): ServiceResult<BusinessObject> {
         response.apply {
 
-            response.list.let {
-                //return Result.Success(it)
+            response.let {
+                return ServiceResult.Success(it)
             }
 
             return ServiceResult.Error(Exception())

@@ -8,11 +8,9 @@ import com.urban.dictionary.model.DictionaryResponse
 import com.urban.dictionary.model.SearchItem
 import com.urban.dictionary.repository.DictionaryRepository
 import com.urban.dictionary.service.ServiceResult
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchDictionaryViewModel : ViewModel() {
-
     private lateinit var dictionaryRepository: DictionaryRepository
     private var _readListData = MutableLiveData<List<SearchItem>>()
     val fetchList: LiveData<List<SearchItem>> = _readListData
@@ -25,7 +23,6 @@ class SearchDictionaryViewModel : ViewModel() {
 
     fun startSearchByTerm(search: String) {
         viewModelScope.launch {
-            delay(1000)
             _isLoading.value = true
             when (
                 val result =
@@ -41,6 +38,24 @@ class SearchDictionaryViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+
+    fun sortSearchData(
+        searchItemList: List<SearchItem>,
+        sortedBy: Int,
+        sortedData: (data: List<SearchItem>) -> Unit
+    ) {
+        var data = searchItemList
+        when (sortedBy) {
+            SearchDictionaryFragment.THUMBS_DOWN -> {
+                data = searchItemList.sortedByDescending { it.thumbs_down }
+            }
+            SearchDictionaryFragment.THUMBS_UP -> {
+                data = searchItemList.sortedByDescending { it.thumbs_up }
+            }
+        }
+        sortedData(data)
     }
 
 }

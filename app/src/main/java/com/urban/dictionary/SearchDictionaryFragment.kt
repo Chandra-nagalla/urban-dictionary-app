@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.urban.dictionary.adapter.SearchAdapter
 import com.urban.dictionary.model.SearchItem
 import com.urban.dictionary.repository.DictionaryRepositoryImpl
+import com.urban.dictionary.utils.SEARCH_ITEM_DETAILS
 
 class SearchDictionaryFragment : Fragment(), TextWatcher {
 
@@ -50,7 +51,7 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
         adapter = SearchAdapter(::searchItemClick)
         viewModel.fetchList.observe(viewLifecycleOwner, Observer {
             searchItemList = it
-            sortSearchData(THUMBS_UP)
+            viewModel.sortSearchData(searchItemList, THUMBS_UP, ::setDataToAdapter)
             recyclerView.adapter = adapter
         })
 
@@ -88,11 +89,11 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
         when (item.itemId) {
 
             R.id.thumbs_up -> {
-                sortSearchData(THUMBS_UP)
+                viewModel.sortSearchData(searchItemList, THUMBS_UP, ::setDataToAdapter)
             }
 
             R.id.thumbs_down -> {
-                sortSearchData(THUMBS_DOWN)
+                viewModel.sortSearchData(searchItemList, THUMBS_DOWN, ::setDataToAdapter)
             }
 
         }
@@ -100,27 +101,17 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
     }
 
 
-    private fun sortSearchData(sortedBy: Int) {
-        var data = searchItemList
-        when (sortedBy) {
-            THUMBS_DOWN -> {
-                data = searchItemList.sortedByDescending { it.thumbs_down }
-            }
-            THUMBS_UP -> {
-                data = searchItemList.sortedByDescending { it.thumbs_up }
-            }
-        }
-
-        adapter.setData(data)
+    private fun setDataToAdapter(sortedData: List<SearchItem>) {
+        adapter.setData(sortedData)
     }
+
 
     private fun searchItemClick(searchItem: SearchItem) {
         findNavController().navigate(
             R.id.urban_search_details_fragment,
-            bundleOf(Pair("Item", searchItem))
+            bundleOf(Pair(SEARCH_ITEM_DETAILS, searchItem))
         )
     }
-
 
     companion object {
         const val THUMBS_UP = 0

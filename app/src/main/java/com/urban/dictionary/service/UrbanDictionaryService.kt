@@ -17,6 +17,4 @@ interface UrbanDictionaryService {
         API_KEY
     )
     suspend fun getSearchByTerm(@Query(API_QUERY) term: String): Response<DictionaryResponse>
-
-
 }
