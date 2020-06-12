@@ -8,6 +8,8 @@ import com.urban.dictionary.model.DictionaryResponse
 import com.urban.dictionary.model.SearchItem
 import com.urban.dictionary.repository.DictionaryRepository
 import com.urban.dictionary.service.ServiceResult
+import com.urban.dictionary.utils.THUMBS_DOWN
+import com.urban.dictionary.utils.THUMBS_UP
 import kotlinx.coroutines.launch
 
 class SearchDictionaryViewModel : ViewModel() {
@@ -48,10 +50,10 @@ class SearchDictionaryViewModel : ViewModel() {
     ) {
         var data = searchItemList
         when (sortedBy) {
-            SearchDictionaryFragment.THUMBS_DOWN -> {
+            THUMBS_DOWN -> {
                 data = searchItemList.sortedByDescending { it.thumbs_down }
             }
-            SearchDictionaryFragment.THUMBS_UP -> {
+            THUMBS_UP -> {
                 data = searchItemList.sortedByDescending { it.thumbs_up }
             }
         }

@@ -5,3 +5,5 @@ const val API_KEY = "x-rapidapi-key:f8b5f497f9mshe2e8ed229fb9618p16bd51jsnacc188
 const val API_QUERY = "term"
 const val BASE_URL = "https://mashape-community-urban-dictionary.p.rapidapi.com/"
 const val SEARCH_ITEM_DETAILS = "ItemDetails"
+const val THUMBS_UP = 0
+const val THUMBS_DOWN = 1

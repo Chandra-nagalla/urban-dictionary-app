@@ -17,6 +17,8 @@ import com.urban.dictionary.adapter.SearchAdapter
 import com.urban.dictionary.model.SearchItem
 import com.urban.dictionary.repository.DictionaryRepositoryImpl
 import com.urban.dictionary.utils.SEARCH_ITEM_DETAILS
+import com.urban.dictionary.utils.THUMBS_DOWN
+import com.urban.dictionary.utils.THUMBS_UP
 
 class SearchDictionaryFragment : Fragment(), TextWatcher {
 
@@ -113,9 +115,5 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
         )
     }
 
-    companion object {
-        const val THUMBS_UP = 0
-        const val THUMBS_DOWN = 1
-    }
 
 }
