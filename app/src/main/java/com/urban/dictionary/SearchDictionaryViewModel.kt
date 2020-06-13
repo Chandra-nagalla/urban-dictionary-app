@@ -24,21 +24,25 @@ class SearchDictionaryViewModel : ViewModel() {
     }
 
     fun startSearchByTerm(search: String) {
-        viewModelScope.launch {
-            _isLoading.value = true
-            when (
-                val result =
-                    dictionaryRepository.fetchSearchData(search)
-                ) {
-                is ServiceResult.Error -> {
-                    _isLoading.value = false
-                }
-                is ServiceResult.Success -> {
-                    _isLoading.value = false
-                    val response = result.data as DictionaryResponse
-                    _readListData.value = response.list
+        if (search.isNotEmpty()) {
+            viewModelScope.launch {
+                _isLoading.value = true
+                when (
+                    val result =
+                        dictionaryRepository.fetchSearchData(search)
+                    ) {
+                    is ServiceResult.Error -> {
+                        _isLoading.value = false
+                    }
+                    is ServiceResult.Success -> {
+                        _isLoading.value = false
+                        val response = result.data as DictionaryResponse
+                        _readListData.value = response.list
+                    }
                 }
             }
+        } else {
+            _readListData.value = emptyList()
         }
     }
 

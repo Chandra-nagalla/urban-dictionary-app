@@ -15,10 +15,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 
 @ExperimentalCoroutinesApi
 class SearchDictionaryViewModelTest {
@@ -49,6 +46,13 @@ class SearchDictionaryViewModelTest {
                 coVerify { dictionaryRepository.fetchSearchData(any()) }
             }
         }
+
+    @Test
+    fun `live data should be empty when empty string passed`() {
+        val emptyString = ""
+        viewModel.startSearchByTerm(emptyString)
+        Assert.assertEquals(emptyList<DictionaryResponse>(), viewModel.fetchList.value)
+    }
 
     private fun mockSearchResult(): ServiceResult<DictionaryResponse> {
         val result = Gson().fromJson(SEARCH_TERM_RESPONSE, DictionaryResponse::class.java)
