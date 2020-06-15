@@ -7,17 +7,17 @@ This application has been used below Jetpack components
 4. Repository
 
 Kotlin:
-Scope functions
-Higer order functions
-Coroutines
-Sealed class
-data class
-
-Http:
-Retrofit
-okHttp
+1. Scope functions
+2. Higer order functions
+3. Coroutines
+4. Sealed class
+5. data class
 
 Testing:
-Junit
-Espresso
-Mockk
+1. Junit
+2. Espresso
+3. Mockk
+
+Http:
+1. Retrofit
+2. okHttp
