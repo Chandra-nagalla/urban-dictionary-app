@@ -1,5 +1,6 @@
 # urban-dictionary-app
-Please use Android Studio 4.0 for application gradle build
+Please use Android Studio 4.0 for application gradle build,
+
 This application has been used below Jetpack components
 1. MVVM
 2. Live Data
