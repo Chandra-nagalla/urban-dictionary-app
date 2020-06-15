@@ -1,4 +1,4 @@
-package com.urban.dictionary
+package com.urban.dictionary.ui
 
 import android.os.Bundle
 import android.text.Editable
@@ -13,7 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.urban.dictionary.adapter.SearchAdapter
+import com.urban.dictionary.R
+import com.urban.dictionary.adapter.SearchDictionaryAdapter
 import com.urban.dictionary.model.SearchItem
 import com.urban.dictionary.repository.DictionaryRepositoryImpl
 import com.urban.dictionary.utils.SEARCH_ITEM_DETAILS
@@ -25,7 +26,7 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
     private lateinit var viewModel: SearchDictionaryViewModel
     private lateinit var searchText: EditText
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SearchAdapter
+    private lateinit var adapter: SearchDictionaryAdapter
     private lateinit var searchItemList: List<SearchItem>
     private lateinit var progressBar: ProgressBar
 
@@ -43,14 +44,33 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configureViewModel()
+        configureUI(view)
+    }
+
+    /**
+     * view setup and configuration
+     * @param view used to setup widgets
+     */
+    private fun configureUI(view: View) {
+        view.apply {
+            searchText = findViewById(R.id.urban_search_editText)
+            searchText.addTextChangedListener(this@SearchDictionaryFragment)
+            recyclerView = findViewById(R.id.urban_search_recycler)
+            progressBar = findViewById(R.id.urban_progressbar)
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            adapter = SearchDictionaryAdapter(::searchItemClick)
+        }
+
+    }
+
+    /**
+     * view model configuration and initialization with repository
+     */
+    private fun configureViewModel() {
         viewModel = ViewModelProvider(this).get(SearchDictionaryViewModel::class.java)
         viewModel.init(DictionaryRepositoryImpl())
-        searchText = view.findViewById(R.id.urban_search_editText)
-        searchText.addTextChangedListener(this)
-        recyclerView = view.findViewById(R.id.urban_search_recycler)
-        progressBar = view.findViewById(R.id.urban_progressbar)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = SearchAdapter(::searchItemClick)
+
         viewModel.fetchList.observe(viewLifecycleOwner, Observer {
             searchItemList = it
             viewModel.sortSearchData(searchItemList, THUMBS_UP, ::setDataToAdapter)
@@ -102,18 +122,23 @@ class SearchDictionaryFragment : Fragment(), TextWatcher {
         return super.onOptionsItemSelected(item)
     }
 
-
+    /**
+     * higher order function which sorts the search item list
+     * @param sortedData search item list
+     */
     private fun setDataToAdapter(sortedData: List<SearchItem>) {
         adapter.setData(sortedData)
     }
 
-
+    /**
+     * higher order function which trigger when tap of search item in recycler view
+     * @param searchItem search item of specific cell in recycler view
+     */
     private fun searchItemClick(searchItem: SearchItem) {
         findNavController().navigate(
             R.id.urban_search_details_fragment,
             bundleOf(Pair(SEARCH_ITEM_DETAILS, searchItem))
         )
     }
-
 
 }

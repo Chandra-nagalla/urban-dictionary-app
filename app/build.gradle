@@ -63,5 +63,6 @@ dependencies {
     debugImplementation 'androidx.fragment:fragment-testing:1.2.5'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
 
 }

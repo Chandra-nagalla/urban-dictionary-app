@@ -1,4 +1,4 @@
-package com.urban.dictionary
+package com.urban.dictionary.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,6 +23,10 @@ class SearchDictionaryViewModel : ViewModel() {
         this.dictionaryRepository = newsRepository
     }
 
+    /**
+     * this method triggers when giving input to search box
+     * @param search term to be entered in search box
+     */
     fun startSearchByTerm(search: String) {
         if (search.isNotEmpty()) {
             viewModelScope.launch {
@@ -47,6 +51,12 @@ class SearchDictionaryViewModel : ViewModel() {
     }
 
 
+    /**
+     * this method sorts the search item list based on the sort type
+     * @param searchItemList search item list
+     * @param sortedBy type of sort
+     * @param sortedData higher order function which calls back the method in fragment
+     */
     fun sortSearchData(
         searchItemList: List<SearchItem>,
         sortedBy: Int,

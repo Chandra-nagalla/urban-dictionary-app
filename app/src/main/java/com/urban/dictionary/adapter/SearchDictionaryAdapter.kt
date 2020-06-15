@@ -9,22 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.urban.dictionary.R
 import com.urban.dictionary.model.SearchItem
 
-class SearchAdapter(
+class SearchDictionaryAdapter(
     private val searchItemClick: (searchItem: SearchItem) -> Unit
 ) :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    RecyclerView.Adapter<SearchDictionaryAdapter.SearchItemViewHolder>() {
     private var dataList = listOf<SearchItem>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.search_item_details, parent, false)
-        return ViewHolder(view)
+        return SearchItemViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return dataList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
         holder.bindView(dataList[position])
     }
 
@@ -34,12 +34,23 @@ class SearchAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var cardView = view.findViewById<CardView>(R.id.card_view)
-        private val wordText = view.findViewById<TextView>(R.id.item_word_text)
-        private val definitionText = view.findViewById<TextView>(R.id.item_definition_text)
-        private val thumbsUpText = view.findViewById<TextView>(R.id.item_thumbsUp_text)
-        private val thumbsDownText = view.findViewById<TextView>(R.id.item_thumbsDown_text)
+    inner class SearchItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        private val cardView: CardView
+        private val wordText: TextView
+        private val definitionText: TextView
+        private val thumbsUpText: TextView
+        private val thumbsDownText: TextView
+
+        init {
+            view.apply {
+                cardView = findViewById(R.id.card_view)
+                wordText = findViewById<TextView>(R.id.item_word_text)
+                definitionText = findViewById<TextView>(R.id.item_definition_text)
+                thumbsUpText = findViewById<TextView>(R.id.item_thumbsUp_text)
+                thumbsDownText = findViewById<TextView>(R.id.item_thumbsDown_text)
+            }
+        }
 
         fun bindView(item: SearchItem) {
             wordText.text = item.word
@@ -51,7 +62,6 @@ class SearchAdapter(
                 searchItemClick(item)
             }
         }
-
 
     }
 

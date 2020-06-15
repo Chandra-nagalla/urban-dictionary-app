@@ -6,6 +6,7 @@ import com.urban.dictionary.model.BusinessObject
 import com.urban.dictionary.model.DictionaryResponse
 import com.urban.dictionary.repository.DictionaryRepository
 import com.urban.dictionary.service.ServiceResult
+import com.urban.dictionary.ui.SearchDictionaryViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -64,5 +65,6 @@ class SearchDictionaryViewModelTest {
             "{\"list\":[{\"definition\":\"The only [proper] [response] to something that [makes absolutely no sense]\",\"permalink\":\"http://wat.urbanup.com/3322419\",\"thumbs_up\":3672,\"sound_urls\":[],\"author\":\"watwat\",\"word\":\"wat\",\"defid\":3322419,\"current_vote\":\"\",\"written_on\":\"2008-09-04T00:00:00.000Z\",\"example\":\"1: If all the animals on the [equator] were capable of [flattery], Halloween and Easter would fall on the same day. 2: wat 1: Wow your cock is almost as big as my dad's. 2: wat 1: I accidentially a whole [coke bottle] 2: You accidentially what? 1: A whole coke bottle 2: wat\",\"thumbs_down\":424}]}"
     }
 }
+
 
 

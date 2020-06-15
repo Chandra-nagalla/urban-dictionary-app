@@ -6,10 +6,10 @@
 
     <fragment
         android:id="@+id/urban_search_dictionary_fragment"
-        android:name="com.urban.dictionary.SearchDictionaryFragment" />
+        android:name="com.urban.dictionary.ui.SearchDictionaryFragment" />
 
     <fragment
         android:id="@+id/urban_search_details_fragment"
-        android:name="com.urban.dictionary.SearchItemDetailsFragment" />
+        android:name="com.urban.dictionary.ui.SearchItemDetailsFragment" />
 
 </navigation>
